@@ -9,65 +9,51 @@
     
     <style>
 /* =========================================
-           1. 배경 (수정: 덩어리X, 안개처럼 퍼짐 + 랜덤 모션)
+           1. 배경 (수정: 덩어리X, 완전 퍼짐 + 스크롤 반응)
            ========================================= */
         .background-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100%; height: 120vh; /* 스크롤 움직임 공간 확보 */
             overflow: hidden; z-index: -1;
-            background: #0f0f11; /* 기본 배경색 */
+            background: #0f0f11;
         }
 
         .blob {
             position: absolute;
-            /* ★핵심: 그냥 색칠이 아니라, 중심에서 밖으로 흐려지는 '빛'으로 변경 */
-            background-size: 200% 200%;
-            mix-blend-mode: screen; /* 색이 겹칠 때 화사하게 */
-            filter: blur(80px); /* 한 번 더 뭉개주기 */
-            opacity: 0.6; /* 은은하게 */
-            will-change: transform;
+            border-radius: 50%; /* 모양은 원이지만 */
+            filter: blur(120px); /* 블러로 형체를 완전히 없앰 */
+            opacity: 0.5;
+            mix-blend-mode: screen;
+            will-change: transform, top; /* 부드러운 움직임 최적화 */
+            
+            /* 제자리에서 울렁거리는 애니메이션 */
+            animation: pulse-glow 10s infinite alternate ease-in-out;
         }
 
-        /* 1번 (보라) - 거대한 안개 */
+        /* 1번 (보라) - 화면 전체를 덮는 거대한 안개 */
         .blob-1 {
-            top: -50%; left: -50%; width: 150vw; height: 150vw;
-            /* 원형 그라데이션: 중심은 진하고 밖은 투명함 */
-            background: radial-gradient(circle, rgba(138,43,226, 0.8) 0%, rgba(138,43,226, 0) 70%);
-            animation: fog-move-1 25s infinite alternate ease-in-out;
+            top: -50%; left: -50%; width: 200vw; height: 200vw;
+            background: radial-gradient(circle, rgba(138,43,226, 0.6) 0%, rgba(138,43,226, 0) 70%);
+            animation-duration: 15s;
         }
 
-        /* 2번 (핑크) - 거대한 안개 */
+        /* 2번 (핑크) - 반대쪽에서 덮는 거대한 안개 */
         .blob-2 {
-            bottom: -50%; right: -50%; width: 150vw; height: 150vw;
-            background: radial-gradient(circle, rgba(255,20,147, 0.8) 0%, rgba(255,20,147, 0) 70%);
-            animation: fog-move-2 30s infinite alternate ease-in-out;
+            bottom: -50%; right: -50%; width: 200vw; height: 200vw;
+            background: radial-gradient(circle, rgba(255,20,147, 0.5) 0%, rgba(255,20,147, 0) 70%);
+            animation-delay: -5s; animation-duration: 18s;
         }
 
-        /* 3번 (파랑) - 거대한 안개 */
+        /* 3번 (파랑) - 중앙에서 은은하게 */
         .blob-3 {
-            top: 20%; left: 20%; width: 120vw; height: 120vw;
-            background: radial-gradient(circle, rgba(0,191,255, 0.8) 0%, rgba(0,191,255, 0) 70%);
-            animation: fog-move-3 28s infinite alternate ease-in-out;
+            top: 20%; left: 10%; width: 180vw; height: 180vw;
+            background: radial-gradient(circle, rgba(0,191,255, 0.5) 0%, rgba(0,191,255, 0) 70%);
+            animation-delay: -8s; animation-duration: 20s;
         }
 
-        /* [랜덤 모션 정의: 흐물흐물하게 녹아내리는 움직임] */
-        @keyframes fog-move-1 {
-            0% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(100px, 50px) scale(1.1); }
-            66% { transform: translate(-50px, 100px) scale(0.9); }
-            100% { transform: translate(50px, -50px) scale(1.05); }
-        }
-
-        @keyframes fog-move-2 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-100px, -100px) scale(1.15); }
-            100% { transform: translate(50px, 50px) scale(0.95); }
-        }
-
-        @keyframes fog-move-3 {
-            0% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(80px, -80px) scale(1.1); }
-            66% { transform: translate(-80px, 50px) scale(0.9); }
-            100% { transform: translate(0, 0) scale(1); }
+        /* [애니메이션: 살짝씩 커졌다 작아지며 울렁거림] */
+        @keyframes pulse-glow {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.1); opacity: 0.7; }
         }
         /* 2. 기본 세팅 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -303,5 +289,17 @@
         <p>COPYRIGHT © 2025 MY PORTFOLIO. ALL RIGHTS RESERVED.</p>
     </footer>
 
-</body>
-</html>
+ <script>
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const blobs = document.querySelectorAll('.blob');
+            
+            // 스크롤할 때마다 각자 다른 속도로 위치를 옮김 (패럴랙스 효과)
+            if(blobs.length >= 3) {
+                blobs[0].style.top = (-50 + scrolled * 0.05) + '%';  // 보라색은 천천히 내려옴
+                blobs[1].style.bottom = (-50 + scrolled * -0.05) + '%'; // 핑크색은 반대로 움직임
+                blobs[2].style.top = (20 + scrolled * 0.02) + '%';   // 파란색은 아주 조금 움직임
+            }
+        });
+    </script>
+</body> </html>
