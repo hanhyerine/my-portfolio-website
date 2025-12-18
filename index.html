@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HAN HYE RIN Portfolio</title>
+    <title>My Creative Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
         /* =========================================
-           1. 배경 설정 (분리된 원형 구체)
+           1. 배경 설정 (이리저리 돌아다니는 구체)
            ========================================= */
         .background-container {
             position: fixed; 
@@ -25,41 +25,50 @@
         .blob {
             position: absolute;
             border-radius: 50%;
-            /* 블러를 낮추고 투명도를 높여 형태가 더 선명하게 분리되도록 수정 */
-            filter: blur(60px); 
-            opacity: 0.6;
+            filter: blur(70px); 
+            opacity: 0.7;
             mix-blend-mode: screen;
             will-change: transform;
         }
 
-        /* 부드러운 유영 애니메이션 */
-        @keyframes float-loop {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(50px, 50px); }
+        /* [애니메이션: 화면을 크게 이리저리 돌아다님] */
+        @keyframes float-path-1 {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40vw, 20vh) scale(1.1); }
+            66% { transform: translate(10vw, 50vh) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
         }
 
-        /* [구체 1 - 왼쪽 상단 보라] 크기를 줄이고 위치를 바깥으로 조정 */
+        @keyframes float-path-2 {
+            0% { transform: translate(0, 0) scale(1.1); }
+            33% { transform: translate(-30vw, -40vh) scale(1); }
+            66% { transform: translate(-50vw, -10vh) scale(1.2); }
+            100% { transform: translate(0, 0) scale(1.1); }
+        }
+
+        @keyframes float-path-3 {
+            0% { transform: translate(0, 0) scale(0.9); }
+            50% { transform: translate(20vw, -50vh) scale(1.1); }
+            100% { transform: translate(0, 0) scale(0.9); }
+        }
+
+        /* 각 구체의 시작 위치와 애니메이션 속도(가만히 있을 때의 움직임)를 빠르게 수정 */
         .blob-1 {
-            top: -15%; left: -10%; 
-            width: 50vw; height: 50vw;
+            top: 10%; left: 10%; width: 45vw; height: 45vw;
             background: radial-gradient(circle, rgba(138, 43, 226, 0.8) 0%, rgba(138, 43, 226, 0) 70%);
-            animation: float-loop 25s infinite ease-in-out;
+            animation: float-path-1 15s infinite ease-in-out; /* 25s -> 15s로 빨라짐 */
         }
 
-        /* [구체 2 - 오른쪽 하단 핑크] */
         .blob-2 {
-            bottom: -15%; right: -10%; 
-            width: 60vw; height: 60vw;
+            bottom: 10%; right: 10%; width: 50vw; height: 50vw;
             background: radial-gradient(circle, rgba(255, 20, 147, 0.7) 0%, rgba(255, 20, 147, 0) 70%);
-            animation: float-loop 30s infinite ease-in-out reverse;
+            animation: float-path-2 18s infinite ease-in-out; /* 30s -> 18s로 빨라짐 */
         }
 
-        /* [구체 3 - 중앙 왼쪽 하늘색] 다른 구체와 겹치지 않게 위치 조정 */
         .blob-3 {
-            top: 40%; left: -20%; 
-            width: 45vw; height: 45vw;
+            top: 50%; left: 30%; width: 40vw; height: 40vw;
             background: radial-gradient(circle, rgba(0, 191, 255, 0.6) 0%, rgba(0, 191, 255, 0) 70%);
-            animation: float-loop 20s infinite ease-in-out;
+            animation: float-path-3 12s infinite ease-in-out; /* 20s -> 12s로 빨라짐 */
         }
 
         /* 2. 기본 세팅 */
@@ -85,9 +94,7 @@
         #hero p { font-size: 1.2rem; color: rgba(255,255,255,0.7); max-width: 600px; line-height: 1.6; }
 
         /* 5. 프로젝트 카드 */
-        .grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;
-        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
         .card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -98,9 +105,7 @@
             transform: translateY(-10px); border-color: #8A2BE2;
             box-shadow: 0 15px 40px -10px rgba(138, 43, 226, 0.4);
         }
-        .card-img-wrapper {
-            width: 100%; height: 500px; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
+        .card-img-wrapper { width: 100%; height: 500px; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .card-img {
             width: 100%; height: 100%; object-fit: cover; object-position: top;
             transition: transform 0.5s ease, filter 0.5s ease;
@@ -123,9 +128,7 @@
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
         @media (min-width: 1024px) {
-            #video .grid {
-                width: 150% !important; margin-left: -25% !important; gap: 50px;
-            }
+            #video .grid { width: 150% !important; margin-left: -25% !important; gap: 50px; }
         }
 
         /* 7. 폼 스타일 */
@@ -161,53 +164,38 @@
             border-radius: 5px; cursor: pointer; border: 1px solid #555; margin-right: 10px;
         }
 
-        @media (max-width: 768px) {
-            #hero h1 { font-size: 2.2rem; } section { padding: 80px 0; } 
-        }
+        @media (max-width: 768px) { #hero h1 { font-size: 2.2rem; } section { padding: 80px 0; } }
     </style>
 </head>
 <body>
     
     <div class="background-container">
-        <div id="blob1" class="blob blob-1"></div>
-        <div id="blob2" class="blob blob-2"></div>
-        <div id="blob3" class="blob blob-3"></div>
+        <div id="scroll-wrapper" style="width: 100%; height: 100%; position: relative;">
+            <div id="blob1" class="blob blob-1"></div>
+            <div id="blob2" class="blob blob-2"></div>
+            <div id="blob3" class="blob blob-3"></div>
+        </div>
     </div>
 
     <div class="container">
         <section id="hero">
-            <h1 data-aos="fade-up" data-aos-duration="1000">
-                Hi, this is my portfolio
-            </h1>
+            <h1 data-aos="fade-up" data-aos-duration="1000">Hi, this is my portfolio</h1>
             <p data-aos="fade-in" data-aos-delay="400" data-aos-duration="1500">
-                꿈을 향해 나아가는 소중한 순간들<br>
-                어제보다 더 나은 나의 여정
+                꿈을 향해 나아가는 소중한 순간들<br>어제보다 더 나은 나의 여정
             </p>
-            <p style="margin-top: 30px; font-size: 0.9rem;" data-aos="fade-in" data-aos-delay="1200" data-aos-duration="1000">
-                ↓ View My Work
-            </p>
+            <p style="margin-top: 30px; font-size: 0.9rem;" data-aos="fade-in" data-aos-delay="1200" data-aos-duration="1000">↓ View My Work</p>
         </section>
 
         <section id="projects">
             <h2 class="section-title" data-aos="fade-right">AI Images</h2>
             <div class="grid">
-                <div class="card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card-img-wrapper">
-                        <img src="project1.png.png" class="card-img" alt="Project 1">
-                    </div>
-                    <div class="card-content">
-                        <h3>루엔</h3>
-                        <p>Cling AI로 제작한 판타지 캐릭터입니다.</p>
-                    </div>
+                <div class="card" data-aos="fade-up">
+                    <div class="card-img-wrapper"><img src="project1.png.png" class="card-img" alt="Project 1"></div>
+                    <div class="card-content"><h3>루엔</h3><p>Cling AI로 제작한 판타지 캐릭터입니다.</p></div>
                 </div>
                 <div class="card" data-aos="fade-up" data-aos-delay="200">
-                     <div class="card-img-wrapper">
-                        <img src="project2.png.png" class="card-img" alt="Project 2">
-                    </div>
-                    <div class="card-content">
-                        <h3>엘리시아 루벨린</h3>
-                        <p>Cling AI로 제작한 판타지 캐릭터입니다.</p>
-                    </div>
+                     <div class="card-img-wrapper"><img src="project2.png.png" class="card-img" alt="Project 2"></div>
+                    <div class="card-content"><h3>엘리시아 루벨린</h3><p>Cling AI로 제작한 판타지 캐릭터입니다.</p></div>
                 </div>
             </div>
         </section>
@@ -215,12 +203,8 @@
         <section id="video">
             <h2 class="section-title" data-aos="fade-right">AI Video</h2>
             <div class="grid">
-                <div class="video-wrapper" data-aos="zoom-in" data-aos-duration="1000">
-                    <iframe src="https://www.youtube.com/embed/ikqw3eVEfpw?si=IIH5iyLChP7qKggv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <div class="video-wrapper" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="600">
-                    <iframe src="https://www.youtube.com/embed/sa2ket1c6Tg?si=S9YgBxygIFoo030k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
+                <div class="video-wrapper" data-aos="zoom-in"><iframe src="https://www.youtube.com/embed/ikqw3eVEfpw?si=IIH5iyLChP7qKggv" title="YouTube video player" frameborder="0" allowfullscreen></iframe></div>
+                <div class="video-wrapper" data-aos="zoom-in" data-aos-delay="300"><iframe src="https://www.youtube.com/embed/sa2ket1c6Tg?si=S9YgBxygIFoo030k" title="YouTube video player" frameborder="0" allowfullscreen></iframe></div>
             </div>
         </section>
 
@@ -236,46 +220,23 @@
 
         <section id="upload">
             <h2 class="section-title" data-aos="fade-right">Upload Portfolio</h2>
-            <p style="color: #aaa; margin-bottom: 30px;" data-aos="fade-up" data-aos-delay="100">관리자 전용: 포트폴리오 자료를 업로드하는 공간입니다.</p>
             <div class="upload-box" data-aos="fade-up">
-                <div class="input-group">
-                    <label>Category</label>
-                    <select id="upload-category">
-                        <option value="image">Image (Project)</option>
-                        <option value="video">Video (Showreel)</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Title</label>
-                    <input type="text" placeholder="작품 제목을 입력하세요">
-                </div>
-                <div class="input-group">
-                    <label>File / Link</label>
-                    <div class="file-upload-wrapper">
-                        <input type="file" id="file-input" style="display: none;">
-                        <label for="file-input" class="file-btn">Choose File</label>
-                        <span style="color: #777; font-size: 0.9rem; margin-left: 10px;">or paste URL below</span>
-                    </div>
-                    <input type="text" placeholder="https://..." style="margin-top: 10px;">
-                </div>
-                <button type="button" class="btn-upload" onclick="alert('서버가 연결되지 않아 저장이 불가능합니다. (정적 페이지 데모)')">
-                    + Add to Portfolio
-                </button>
+                <div class="input-group"><label>Category</label><select><option>Image</option><option>Video</option></select></div>
+                <div class="input-group"><label>Title</label><input type="text" placeholder="작품 제목"></div>
+                <button type="button" class="btn-upload" onclick="alert('데모 페이지입니다.')">+ Add to Portfolio</button>
             </div>
         </section>
     </div> 
 
-    <footer style="text-align: center; padding: 80px 20px 40px; color: rgba(255, 255, 255, 0.3); font-size: 0.75rem; letter-spacing: 1px; max-width: 500px; margin: 0 auto; line-height: 1.8;">
-        <p style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; display: inline-block;">
-            DESIGNED & DEVELOPED BY HAN HYE RIN
-        </p>
-        <p>COPYRIGHT © 2025 MY PORTFOLIO. ALL RIGHTS RESERVED.</p>
+    <footer style="text-align: center; padding: 80px 20px 40px; color: rgba(255, 255, 255, 0.3); font-size: 0.75rem; letter-spacing: 1px;">
+        <p>DESIGNED & DEVELOPED BY HAN HYE RIN / COPYRIGHT © 2025</p>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ offset: 150, duration: 800, easing: 'ease-out-cubic', once: true });
 
+        const wrapper = document.getElementById('scroll-wrapper');
         const b1 = document.getElementById('blob1');
         const b2 = document.getElementById('blob2');
         const b3 = document.getElementById('blob3');
@@ -283,10 +244,15 @@
         window.addEventListener('scroll', () => {
             const scrollPos = window.pageYOffset;
             window.requestAnimationFrame(() => {
-                // 스크롤 시 각 구체가 겹치지 않고 서로 다른 속도로 천천히 이동
-                b1.style.transform = `translateY(${scrollPos * 0.08}px)`;
-                b2.style.transform = `translateY(${scrollPos * -0.05}px)`;
-                b3.style.transform = `translateY(${scrollPos * 0.03}px)`;
+                // 스크롤 속도를 기존 0.05에서 0.15~0.2 정도로 올려 더 빠르게 반응하도록 수정
+                // 개별 구체에 추가적인 translate를 주어 스크롤 시 이리저리 흩어지는 효과 부여
+                b1.style.marginTop = `${scrollPos * 0.1}px`;
+                b1.style.marginLeft = `${scrollPos * 0.05}px`;
+                
+                b2.style.marginBottom = `${scrollPos * 0.15}px`;
+                b2.style.marginRight = `${scrollPos * 0.08}px`;
+                
+                b3.style.marginTop = `${scrollPos * -0.1}px`;
             });
         });
     </script>
