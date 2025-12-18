@@ -9,62 +9,70 @@
     
     <style>
         /* =========================================
-           1. 배경 설정 (확실한 움직임!)
+           1. 배경 설정 (색상 유지 + 부드러운 흐름)
            ========================================= */
         .background-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             overflow: hidden; z-index: -1;
-            background: #000000; /* 완전 블랙 */
+            background: #050505; /* 기본 배경 */
         }
 
         .blob {
             position: absolute;
             border-radius: 50%;
-            filter: blur(70px); /* 뭉게짐 효과 */
-            opacity: 0.8; /* 색상 더 진하게 */
-            mix-blend-mode: screen; 
-            will-change: transform, border-radius; /* 성능 최적화 */
+            filter: blur(80px); /* 몽환적인 블러 */
+            opacity: 0.6; /* 은은하게 겹치도록 */
+            mix-blend-mode: screen; /* 색이 겹칠 때 빛나게 */
+            will-change: top, left, transform; /* 성능 최적화 */
         }
 
-        /* [움직임 정의: 제자리에서 꿀렁거리는게 아니라, 좌표를 이동시킴] */
-        @keyframes float-around {
+        /* [애니메이션: 제자리에서 둥둥 떠다니기] */
+        /* 위치 이동은 JS가 아니라 CSS로 처리하여 더 부드럽게 만듦 */
+        @keyframes float-1 {
             0% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(150px, -50px) scale(1.2); }
-            66% { transform: translate(-100px, 100px) scale(0.9); }
+            33% { transform: translate(50px, 30px) scale(1.1); }
+            66% { transform: translate(-20px, 50px) scale(0.95); }
             100% { transform: translate(0, 0) scale(1); }
         }
 
-        @keyframes pulse-shape {
-            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+        @keyframes float-2 {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-50px, -50px) scale(1.1); }
+            100% { transform: translate(0, 0) scale(1); }
         }
 
-        /* 1번 (보라) - 왼쪽 위에서 시작 */
+        @keyframes float-3 {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.05); }
+            66% { transform: translate(-30px, 20px) scale(0.95); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* 1번 (보라) - 화면 전체를 덮을 만큼 크게 */
         .blob-1 {
-            top: -10%; left: -10%; width: 60vw; height: 60vw;
-            background: radial-gradient(circle, #8A2BE2 0%, rgba(138,43,226,0) 70%);
-            /* 두 가지 애니메이션 동시 적용: 위치이동 + 모양변경 */
-            animation: float-around 10s infinite ease-in-out alternate, pulse-shape 8s infinite ease-in-out;
+            top: -30%; left: -20%; width: 140vw; height: 140vw;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.7) 0%, rgba(0,0,0,0) 60%);
+            animation: float-1 20s infinite ease-in-out;
         }
 
-        /* 2번 (핑크) - 오른쪽 아래에서 시작 */
+        /* 2번 (핑크) - 반대쪽에서 덮음 */
         .blob-2 {
-            bottom: -10%; right: -10%; width: 70vw; height: 70vw;
-            background: radial-gradient(circle, #FF1493 0%, rgba(255,20,147,0) 70%);
-            animation: float-around 12s infinite ease-in-out alternate-reverse, pulse-shape 10s infinite ease-in-out;
+            bottom: -30%; right: -20%; width: 150vw; height: 150vw;
+            background: radial-gradient(circle, rgba(255, 20, 147, 0.6) 0%, rgba(0,0,0,0) 60%);
+            animation: float-2 25s infinite ease-in-out reverse;
         }
 
-        /* 3번 (파랑) - 중앙에서 시작 */
+        /* 3번 (파랑) - 중앙에서 중심 잡음 */
         .blob-3 {
-            top: 40%; left: 20%; width: 50vw; height: 50vw;
-            background: radial-gradient(circle, #00BFFF 0%, rgba(0,191,255,0) 70%);
-            animation: float-around 9s infinite ease-in-out alternate, pulse-shape 7s infinite ease-in-out;
+            top: 20%; left: 10%; width: 120vw; height: 120vw;
+            background: radial-gradient(circle, rgba(0, 191, 255, 0.6) 0%, rgba(0,0,0,0) 60%);
+            animation: float-3 22s infinite ease-in-out;
         }
 
 
         /* 2. 기본 세팅 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: #000; color: white; overflow-x: hidden; }
+        body { background-color: transparent; color: white; overflow-x: hidden; }
 
         /* 3. 레이아웃 */
         .container { max-width: 700px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
@@ -296,21 +304,16 @@
         const blob3 = document.querySelector('.blob-3');
 
         window.addEventListener('scroll', function() {
-            // requestAnimationFrame을 써서 끊김 없이 부드럽게
             window.requestAnimationFrame(() => {
                 const scrolled = window.scrollY;
-
-                // CSS transform과 충돌하지 않도록 'top', 'bottom', 'left' 속성만 건드림
-                // 스크롤 할 때마다 blob들이 위아래로 슉슉 이동함 (숫자가 클수록 빠름)
                 
-                // 1번(보라): 아래로 
-                blob1.style.top = (-10 + scrolled * 0.1) + '%'; 
+                // 기존 0.1(빠름) -> 0.02(아주 느림)으로 변경
+                // 스크롤을 1000px 내려도 고작 20px 정도만 움직이므로 색이 절대 안 사라짐
+                // 대신 서로 미세하게 교차되면서 입체감만 살림
                 
-                // 2번(핑크): 위로 (반대로)
-                blob2.style.bottom = (-10 + scrolled * 0.15) + '%'; 
-                
-                // 3번(파랑): 대각선으로
-                blob3.style.top = (40 - scrolled * 0.05) + '%';
+                blob1.style.top = `calc(-30% + ${scrolled * 0.02}%)`; 
+                blob2.style.bottom = `calc(-30% + ${scrolled * 0.03}%)`;
+                blob3.style.top = `calc(20% - ${scrolled * 0.01}%)`;
             });
         });
     </script>
