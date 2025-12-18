@@ -1,4 +1,4 @@
-padding<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -40,7 +40,7 @@ padding<!DOCTYPE html>
         }
 
         /* 4. 히어로 섹션 */
-        #hero { height: 90vh; display: flex; flex-direction: column; justify-content: center; }
+        #hero { height: 90vh; align-items: center; text-align: center; display: flex; flex-direction: column; justify-content: center; }
         #hero h1 {
             font-size: 4.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 20px;
             background: linear-gradient(to right top, #ffffff, #e0e0e0);
@@ -79,7 +79,7 @@ padding<!DOCTYPE html>
         }
 
         .card-img {
-            width: 100%; height: 100%; object-fit: contain;
+            width: 100%; height: 100%; object-fit: cover; object-position: top;
             transition: transform 0.5s ease, filter 0.5s ease; /* 부드러운 움직임 설정 */
         }
 
@@ -144,21 +144,22 @@ padding<!DOCTYPE html>
 
     <div class="container">
         <section id="hero" data-aos="fade-up" data-aos-duration="1000">
-            <h1>Design at the<br>Speed of AI</h1>
-            <p>Transforming ideas into visual reality.<br>Welcome to my creative universe.</p>
-            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.5;">↓ Scroll to explore</p>
+            <h1>hi, this is my <br>portfolio</h1>
+            <p>꿈을 향해 나아가는 소중한 순간들.<br>어제보다 더 나은 나의 여</p>
+            <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.5;">↓ View My Work</p>
         </section>
 
         <section id="projects">
-            <h2 class="section-title" data-aos="fade-right">Featured Projects</h2>
+            <h2 class="section-title" data-aos="fade-right">AI Images</h2>
             <div class="grid">
                 <div class="card" data-aos="fade-up" data-aos-delay="100">
                     <div class="card-img-wrapper">
                         <img src="project1.png.png" class="card-img" alt="Project 1">
                     </div>
                     <div class="card-content">
-                        <h3>NEXUS Redesign</h3>
-                        <p>AI 기반 플랫폼의 UX/UI 리디자인 프로젝트입니다. 사용자 경험을 중심으로 설계했습니다.</p>
+                        <h3>루엔</h3>
+                        <p>Cling AI로 제작한 판타지 캐릭터입니다.  </p>
+
                     </div>
                 </div>
                 <div class="card" data-aos="fade-up" data-aos-delay="200">
@@ -168,24 +169,28 @@ padding<!DOCTYPE html>
                     </div>
 
                     <div class="card-content">
-                        <h3>Motion Graphics</h3>
-                        <p>Cinema 4D와 After Effects를 활용한 3D 모션 그래픽 릴입니다.</p>
+                        <h3>엘리시아 루벨린</h3>
+                        <p>Cling AI로 제작한 판타지 캐릭터입니다.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="video">
-            <h2 class="section-title" data-aos="fade-right">Showreel Video</h2>
-            <div class="video-wrapper" data-aos="zoom-in" data-aos-duration="800">
-                <iframe src="https://www.youtube.com/embed/ikqw3eVEfpw?si=7d-oPxyQSWaKW9VW"  title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
+       <section id="video">
+    <h2 class="section-title" data-aos="fade-right">AI Video</h2>
+    
+    <div class="grid">
+        
+        <div class="video-wrapper" data-aos="zoom-in" data-aos-duration="800">
+            <iframe src="https://www.youtube.com/embed/ikqw3eVEfpw?si=7d-oPxyQSWaKW9VW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
 
-            <div class="video-wrapper" data-aos="zoom-in" data-aos-duration="800" style="margin-top: 30px;">
-        <iframe src="https://www.youtube.com/embed/sa2ket1c6Tg?si=rRu9O3eEhk3qEiIG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-wrapper" data-aos="zoom-in" data-aos-duration="800" data-aos-delay="200">
+            <iframe src="https://www.youtube.com/embed/sa2ket1c6Tg?si=rRu9O3eEhk3qEiIG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
     </div>
 </section>
-        </section>
 
         <section id="contact">
              <h2 class="section-title" data-aos="fade-right">Get in Touch</h2>
