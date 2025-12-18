@@ -9,7 +9,7 @@
     
     <style>
         /* =========================================
-           1. 움직이는 오로라 배경 (확실하게 움직임!) 
+           1. 움직이는 오로라 배경 (속도 UP! 거리 UP!)
            ========================================= */
         .background-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
@@ -20,42 +20,46 @@
         .blob {
             position: absolute;
             border-radius: 50%;
-            filter: blur(80px); opacity: 0.6;
+            filter: blur(60px); /* 블러를 조금 줄여서 더 잘 보이게 함 */
+            opacity: 0.6;
             mix-blend-mode: screen;
             /* 애니메이션 강제 적용 */
-            animation: aurora-flow 10s infinite alternate ease-in-out;
+            animation: aurora-flow 8s infinite alternate ease-in-out;
+            will-change: transform; /* 부드러운 움직임 최적화 */
         }
 
         /* 1번 (보라) */
         .blob-1 {
             top: -10%; left: -10%; width: 50vw; height: 50vw;
             background: #8A2BE2;
-            animation-duration: 12s;
+            animation-duration: 10s; /* 20초 -> 10초로 단축 */
         }
 
         /* 2번 (핑크) */
         .blob-2 {
             bottom: -10%; right: -10%; width: 50vw; height: 50vw;
             background: #FF1493;
-            animation-delay: -2s; animation-duration: 15s;
+            animation-delay: -2s; 
+            animation-duration: 12s; /* 25초 -> 12초로 단축 */
         }
 
         /* 3번 (파랑) */
         .blob-3 {
             bottom: -20%; left: 20%; width: 40vw; height: 40vw;
             background: #00BFFF;
-            animation-delay: -4s; animation-duration: 18s;
+            animation-delay: -4s; 
+            animation-duration: 14s; /* 22초 -> 14초로 단축 */
         }
 
-        /* [움직임 정의] - 확실하게 커졌다 작아지고 이동함 */
+        /* [움직임 정의] - 50px -> 200px로 대폭 늘림 (확 티나게!) */
         @keyframes aurora-flow {
             0% {
                 transform: translate(0, 0) scale(1);
                 border-radius: 50%;
             }
             100% {
-                transform: translate(50px, 100px) scale(1.2); 
-                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+                transform: translate(200px, 100px) scale(1.1); /* 멀리 움직여라! */
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; /* 모양도 찌그러져라! */
             }
         }
 
