@@ -9,61 +9,66 @@
     
     <style>
 /* =========================================
-           1. 배경 (수정: 모션 극대화 + 위치 싸움 해결)
+           1. 배경 (수정: 덩어리X, 안개처럼 퍼짐 + 랜덤 모션)
            ========================================= */
         .background-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 120vh;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             overflow: hidden; z-index: -1;
-            background: #0f0f11;
+            background: #0f0f11; /* 기본 배경색 */
         }
 
         .blob {
             position: absolute;
-            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; /* 찌그러진 원 */
-            filter: blur(60px); /* 블러를 줄여서 움직임이 더 잘 보이게 */
-            mix-blend-mode: screen; 
-            will-change: transform; /* 끊김 방지 */
-            opacity: 0.8; /* 진하게 */
+            /* ★핵심: 그냥 색칠이 아니라, 중심에서 밖으로 흐려지는 '빛'으로 변경 */
+            background-size: 200% 200%;
+            mix-blend-mode: screen; /* 색이 겹칠 때 화사하게 */
+            filter: blur(80px); /* 한 번 더 뭉개주기 */
+            opacity: 0.6; /* 은은하게 */
+            will-change: transform;
         }
 
-        /* 1번 (보라) - 미친듯이 돌아다님 */
+        /* 1번 (보라) - 거대한 안개 */
         .blob-1 {
-            top: -10%; left: -10%; width: 90vw; height: 90vw;
+            top: -50%; left: -50%; width: 150vw; height: 150vw;
+            /* 원형 그라데이션: 중심은 진하고 밖은 투명함 */
             background: radial-gradient(circle, rgba(138,43,226, 0.8) 0%, rgba(138,43,226, 0) 70%);
-            animation: dance-1 15s infinite alternate ease-in-out;
+            animation: fog-move-1 25s infinite alternate ease-in-out;
         }
 
-        /* 2번 (핑크) - 반대쪽에서 덮침 */
+        /* 2번 (핑크) - 거대한 안개 */
         .blob-2 {
-            bottom: -10%; right: -10%; width: 80vw; height: 80vw;
-            background: radial-gradient(circle, rgba(255,20,147, 0.6) 0%, rgba(255,20,147, 0) 70%);
-            animation: dance-2 12s infinite alternate ease-in-out; /* 속도 다르게 */
+            bottom: -50%; right: -50%; width: 150vw; height: 150vw;
+            background: radial-gradient(circle, rgba(255,20,147, 0.8) 0%, rgba(255,20,147, 0) 70%);
+            animation: fog-move-2 30s infinite alternate ease-in-out;
         }
 
-        /* 3번 (파랑) - 중앙에서 회전 */
+        /* 3번 (파랑) - 거대한 안개 */
         .blob-3 {
-            top: 30%; left: 30%; width: 80vw; height: 80vw;
+            top: 20%; left: 20%; width: 120vw; height: 120vw;
             background: radial-gradient(circle, rgba(0,191,255, 0.8) 0%, rgba(0,191,255, 0) 70%);
-            animation: dance-3 10s infinite alternate ease-in-out; /* 제일 빠르게 */
+            animation: fog-move-3 28s infinite alternate ease-in-out;
         }
 
-        /* [모션 정의: 훨씬 과격하게 움직임] */
-        @keyframes dance-1 {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            100% { transform: translate(100px, 200px) rotate(90deg) scale(1.2); }
+        /* [랜덤 모션 정의: 흐물흐물하게 녹아내리는 움직임] */
+        @keyframes fog-move-1 {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, 50px) scale(1.1); }
+            66% { transform: translate(-50px, 100px) scale(0.9); }
+            100% { transform: translate(50px, -50px) scale(1.05); }
         }
 
-        @keyframes dance-2 {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            100% { transform: translate(-200px, -100px) rotate(-180deg) scale(0.9); }
+        @keyframes fog-move-2 {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-100px, -100px) scale(1.15); }
+            100% { transform: translate(50px, 50px) scale(0.95); }
         }
 
-        @keyframes dance-3 {
-            0% { transform: translate(0, 0) scale(1); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-            50% { transform: translate(150px, -150px) scale(1.3); border-radius: 100%; }
-            100% { transform: translate(-50px, 50px) scale(0.8); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+        @keyframes fog-move-3 {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(80px, -80px) scale(1.1); }
+            66% { transform: translate(-80px, 50px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
         }
-
         /* 2. 기본 세팅 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #0f0f11; color: white; overflow-x: hidden; }
