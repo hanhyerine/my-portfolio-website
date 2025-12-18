@@ -8,212 +8,191 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
+        /* =========================================
+           1. 움직이는 오로라 배경 (확실하게 움직임!) 
+           ========================================= */
         .background-container {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-        overflow: hidden; z-index: -1;
-        background: #0f0f11;
-    }
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            overflow: hidden; z-index: -1;
+            background: #0f0f11;
+        }
 
-    .blob {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(80px); opacity: 0.6;
-        mix-blend-mode: screen;
-        animation: aurora-move 10s infinite alternate;
-    }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px); opacity: 0.6;
+            mix-blend-mode: screen;
+            /* 애니메이션 강제 적용 */
+            animation: aurora-flow 10s infinite alternate ease-in-out;
+        }
 
-    .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #8A2BE2; animation-duration: 20s; }
-    .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #FF1493; animation-delay: -5s; animation-duration: 25s; }
-    .blob-3 { bottom: -20%; left: 20%; width: 40vw; height: 40vw; background: #00BFFF; animation-delay: -10s; animation-duration: 22s; }
+        /* 1번 (보라) */
+        .blob-1 {
+            top: -10%; left: -10%; width: 50vw; height: 50vw;
+            background: #8A2BE2;
+            animation-duration: 12s;
+        }
 
-    @keyframes aurora-move {
-        from { transform: translate(0, 0) scale(1); }
-        to   { transform: translate(50px, 50px) scale(1.1); }
-    }
-        /* 1. 기본 세팅 */
+        /* 2번 (핑크) */
+        .blob-2 {
+            bottom: -10%; right: -10%; width: 50vw; height: 50vw;
+            background: #FF1493;
+            animation-delay: -2s; animation-duration: 15s;
+        }
+
+        /* 3번 (파랑) */
+        .blob-3 {
+            bottom: -20%; left: 20%; width: 40vw; height: 40vw;
+            background: #00BFFF;
+            animation-delay: -4s; animation-duration: 18s;
+        }
+
+        /* [움직임 정의] - 확실하게 커졌다 작아지고 이동함 */
+        @keyframes aurora-flow {
+            0% {
+                transform: translate(0, 0) scale(1);
+                border-radius: 50%;
+            }
+            100% {
+                transform: translate(50px, 100px) scale(1.2); 
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+        }
+
+        /* 2. 기본 세팅 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #0f0f11; color: white; overflow-x: hidden; }
 
-        /* [비디오 섹션 전용 확장 코드] */
-    /* PC 화면에서만 비디오 박스를 강제로 넓힙니다 */
-    @media (min-width: 1024px) {
-        #video .grid {
-            width: 150% !important;       /* 전체 폭보다 50% 더 넓게! */
-            margin-left: -25% !important; /* 왼쪽으로 당겨서 중앙 맞추기 */
-            gap: 50px;                    /* 영상 사이 간격도 시원하게 */
-        }
-    }
-        /* 3. 레이아웃 */
-        .container { max-width:700px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+        /* 3. 레이아웃 (홀쭉하게 유지) */
+        .container { max-width: 700px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
         section { padding: 120px 0; }
         h2.section-title {
             font-size: 2.2rem; font-weight: 700; margin-bottom: 50px;
             display: inline-block; border-bottom: 3px solid #FF1493;
         }
 
-        /* 4. 히어로 섹션 */
+        /* 4. 히어로 섹션 (글씨 크기 수정됨!) */
         #hero { height: 90vh; align-items: center; text-align: center; display: flex; flex-direction: column; justify-content: center; }
         #hero h1 {
-            font-size: 2.8rem; font-weight: 900; line-height: 1.1; margin-bottom: 20px;
+            /* ★수정★: 3.5rem -> 2.8rem으로 줄여서 한 줄에 들어오게 함 */
+            font-size: 2.8rem; 
+            font-weight: 900; line-height: 1.1; margin-bottom: 20px;
             background: linear-gradient(to right top, #ffffff, #e0e0e0);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            word-break: keep-all; /* 단어 중간에 끊기지 않게 */
         }
-        #hero p { font-size: 1.4rem; color: rgba(255,255,255,0.7); max-width: 600px; }
+        #hero p { font-size: 1.2rem; color: rgba(255,255,255,0.7); max-width: 600px; line-height: 1.6; }
 
-        /* =========================================
-           5. 프로젝트 카드 및 이미지 호버 효과 (수정됨!)
-           ========================================= */
+        /* 5. 프로젝트 카드 */
         .grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;
         }
-
         .card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            overflow: hidden; /* 이미지가 확대되어도 카드 밖으로 안 나가게 */
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-            cursor: pointer; /* 마우스 올리면 손가락 모양 */
+            border-radius: 16px; overflow: hidden;
+            transition: all 0.4s ease; backdrop-filter: blur(10px); cursor: pointer;
         }
-
-        /* 카드 전체에 마우스 올렸을 때 */
         .card:hover {
-            transform: translateY(-10px); /* 카드 위로 이동 */
-            border-color: #8A2BE2; /* 보라색 테두리 */
-            box-shadow: 0 15px 40px -10px rgba(138, 43, 226, 0.4); /* 보라색 그림자 */
+            transform: translateY(-10px); border-color: #8A2BE2;
+            box-shadow: 0 15px 40px -10px rgba(138, 43, 226, 0.4);
         }
-
-        /* 이미지 영역 스타일 */
         .card-img-wrapper {
-            width: 100%; height: 500px; overflow: hidden; /* 넘치는 이미지 숨김 */
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            width: 100%; height: 500px; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-
         .card-img {
             width: 100%; height: 100%; object-fit: cover; object-position: top;
-            transition: transform 0.5s ease, filter 0.5s ease; /* 부드러운 움직임 설정 */
+            transition: transform 0.5s ease, filter 0.5s ease;
         }
-
-        /* ★핵심: 카드에 마우스 올렸을 때 -> 이미지가 변함★ */
-        .card:hover .card-img {
-            transform: scale(1.1); /* 1.1배 확대 */
-            filter: brightness(1.15); /* 살짝 밝게 */
-        }
-
+        .card:hover .card-img { transform: scale(1.1); filter: brightness(1.15); }
         .card-content { padding: 25px; }
         .card-content h3 { font-size: 1.3rem; margin-bottom: 10px; }
         .card-content p { color: #aaa; font-size: 0.95rem; line-height: 1.6; }
 
-        /* =========================================
-           6. 비디오 영역 호버 효과 (수정됨!)
-           ========================================= */
+        /* 6. 비디오 영역 */
         .video-wrapper {
             position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
             border-radius: 16px; background: #000;
-            border: 2px solid rgba(255, 255, 255, 0.1); /* 기본 테두리 */
-            transition: all 0.4s ease; /* 부드러운 전환 */
+            border: 2px solid rgba(255, 255, 255, 0.1); transition: all 0.4s ease;
         }
-
-        /* ★핵심: 비디오에 마우스 올렸을 때★ */
         .video-wrapper:hover {
-            transform: scale(1.02); /* 전체적으로 살짝 커짐 */
-            border-color: #FF1493; /* 핑크색 테두리로 변경 */
-            /* 핑크색 네온 사인처럼 빛나는 효과 */
+            transform: scale(1.02); border-color: #FF1493;
             box-shadow: 0 0 30px rgba(255, 20, 147, 0.5), inset 0 0 20px rgba(255, 20, 147, 0.2);
         }
-
-        /* [관리자 업로드 섹션 스타일] */
-.upload-box {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px dashed rgba(255, 255, 255, 0.2); /* 점선 테두리 */
-    border-radius: 20px;
-    padding: 40px;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.input-group { margin-bottom: 25px; text-align: left; }
-.input-group label { display: block; margin-bottom: 10px; color: #FF1493; font-weight: bold; }
-
-/* 선택 상자 (Select) 디자인 */
-select {
-    width: 100%; padding: 15px;
-    background: #0f0f11; color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px; outline: none;
-}
-
-/* 파일 업로드 버튼 꾸미기 */
-.file-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #333; color: white;
-    border-radius: 5px; cursor: pointer;
-    border: 1px solid #555;
-}
-.file-btn:hover { background: #444; }
-
-/* 업로드 버튼 (Add) */
-.btn-upload {
-    width: 100%; padding: 20px;
-    background: linear-gradient(to right, #00BFFF, #8A2BE2); /* 파랑-보라 그라데이션 */
-    color: white; border: none; border-radius: 8px;
-    font-size: 1.2rem; font-weight: 800;
-    cursor: pointer; margin-top: 10px;
-    transition: transform 0.2s;
-}
-.btn-upload:hover { transform: scale(1.02); }
-
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        /* 7. 컨택 폼 (변경 없음) */
+        /* [비디오 섹션 전용 확장 코드] */
+        @media (min-width: 1024px) {
+            #video .grid {
+                width: 150% !important; margin-left: -25% !important; gap: 50px;
+            }
+        }
+
+        /* 7. 컨택 폼 & 업로드 폼 */
         .contact-form {
             max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;
             background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);
         }
-        input, textarea {
+        input, textarea, select {
             width: 100%; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 25px; border-radius: 8px; color: white; font-size: 1rem; outline: none; transition: border-color 0.3s;
+            padding: 20px; border-radius: 8px; color: white; font-size: 1rem; outline: none; transition: border-color 0.3s;
         }
-        input:focus, textarea:focus { border-color: #FF1493; }
-        .btn-submit {
-            padding: 15px; background: linear-gradient(to right, #8A2BE2, #FF1493);
-            color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700;
-            cursor: pointer; transition: opacity 0.3s, transform 0.2s;
+        input:focus, textarea:focus, select:focus { border-color: #FF1493; }
+        
+        .btn-submit, .btn-upload {
+            padding: 15px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 700;
+            cursor: pointer; transition: transform 0.2s; color: white;
         }
-        .btn-submit:hover { opacity: 0.9; transform: translateY(-3px); /* 버튼도 살짝 올라오게 */ }
+        .btn-submit { background: linear-gradient(to right, #8A2BE2, #FF1493); }
+        .btn-upload { background: linear-gradient(to right, #00BFFF, #8A2BE2); margin-top: 10px; width: 100%; }
+        .btn-submit:hover, .btn-upload:hover { transform: scale(1.02); }
+
+        .upload-box {
+            background: rgba(255, 255, 255, 0.05); border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 20px; padding: 40px; max-width: 450px; margin: 0 auto;
+        }
+        .input-group { margin-bottom: 25px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 10px; color: #FF1493; font-weight: bold; }
+        
+        .file-upload-wrapper { display: flex; align-items: center; }
+        .file-btn {
+            display: inline-block; padding: 10px 20px; background: #333; color: white;
+            border-radius: 5px; cursor: pointer; border: 1px solid #555; margin-right: 10px;
+        }
 
         /* 모바일 대응 */
         @media (max-width: 768px) {
-            #hero h1 { font-size: 3rem; } section { padding: 80px 0; } .contact-form { padding: 25px; }
+            #hero h1 { font-size: 2.2rem; } section { padding: 80px 0; } 
+            .blob { animation: none; } /* 폰에서는 성능 위해 애니메이션 끄기 (선택사항) */
         }
     </style>
 </head>
 <body>
+    
     <div class="background-container">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
-    <nav class="navbar">
-</nav>
+
     <div class="container">
-   <section id="hero">
-    <h1 data-aos="fade-up" data-aos-duration="1000">
-        Hi, this is my portfolio
-    </h1>
-    
-    <p data-aos="fade-in" data-aos-delay="400" data-aos-duration="1500">
-        꿈을 향해 나아가는 소중한 순간들<br>
-        어제보다 더 나은 나의 여정
-    </p>
-    
-    <p style="margin-top: 30px; font-size: 0.9rem;" data-aos="fade-in" data-aos-delay="1200" data-aos-duration="1000">
-    ↓ View My Work
-</p>
-</section>
+        
+        <section id="hero">
+            <h1 data-aos="fade-up" data-aos-duration="1000">
+                Hi, this is my portfolio
+            </h1>
+            
+            <p data-aos="fade-in" data-aos-delay="400" data-aos-duration="1500">
+                꿈을 향해 나아가는 소중한 순간들<br>
+                어제보다 더 나은 나의 여정
+            </p>
+            
+            <p style="margin-top: 30px; font-size: 0.9rem;" data-aos="fade-in" data-aos-delay="1200" data-aos-duration="1000">
+                ↓ View My Work
+            </p>
+        </section>
 
         <section id="projects">
             <h2 class="section-title" data-aos="fade-right">AI Images</h2>
@@ -224,16 +203,13 @@ select {
                     </div>
                     <div class="card-content">
                         <h3>루엔</h3>
-                        <p>Cling AI로 제작한 판타지 캐릭터입니다.  </p>
-
+                        <p>Cling AI로 제작한 판타지 캐릭터입니다.</p>
                     </div>
                 </div>
                 <div class="card" data-aos="fade-up" data-aos-delay="200">
                      <div class="card-img-wrapper">
-                        <img src="project2.png.png
-                        " class="card-img" alt="Project 2">
+                        <img src="project2.png.png" class="card-img" alt="Project 2">
                     </div>
-
                     <div class="card-content">
                         <h3>엘리시아 루벨린</h3>
                         <p>Cling AI로 제작한 판타지 캐릭터입니다.</p>
@@ -242,21 +218,17 @@ select {
             </div>
         </section>
 
-<section id="video">
-    <h2 class="section-title" data-aos="fade-right">AI Video</h2>
-    
-    <div class="grid">
-        
-        <div class="video-wrapper" data-aos="zoom-in" data-aos-duration="1000">
-            <iframe src="https://www.youtube.com/embed/ikqw3eVEfpw?si=IIH5iyLChP7qKggv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-
-        <div class="video-wrapper" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="600">
-            <iframe src="https://www.youtube.com/embed/sa2ket1c6Tg?si=S9YgBxygIFoo030k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-
-    </div>
-</section>
+        <section id="video">
+            <h2 class="section-title" data-aos="fade-right">AI Video</h2>
+            <div class="grid">
+                <div class="video-wrapper" data-aos="zoom-in" data-aos-duration="1000">
+                    <iframe src="https://www.youtube.com/embed/ikqw3eVEfpw?si=IIH5iyLChP7qKggv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-wrapper" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="600">
+                    <iframe src="https://www.youtube.com/embed/sa2ket1c6Tg?si=S9YgBxygIFoo030k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
 
         <section id="contact">
              <h2 class="section-title" data-aos="fade-right">Get in Touch</h2>
@@ -269,48 +241,55 @@ select {
         </section>
 
         <section id="upload">
-    <h2 class="section-title" data-aos="fade-right">Upload Portfolio</h2>
-<p style="color: #aaa; margin-bottom: 30px;" data-aos="fade-up" data-aos-delay="100">관리자 전용: 포트폴리오 자료를 업로드하는 공간입니다.</p>
-    <div class="upload-box" data-aos="fade-up">
-        <div class="input-group">
-            <label>Category</label>
-            <select id="upload-category">
-                <option value="image">Image (Project)</option>
-                <option value="video">Video (Showreel)</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label>Title</label>
-            <input type="text" placeholder="작품 제목을 입력하세요">
-        </div>
-
-        <div class="input-group">
-            <label>File / Link</label>
-            <div class="file-upload-wrapper">
-                <input type="file" id="file-input" style="display: none;">
-                <label for="file-input" class="file-btn">Choose File</label>
-                <span style="color: #777; font-size: 0.9rem; margin-left: 10px;">or paste URL below</span>
+            <h2 class="section-title" data-aos="fade-right">Upload Portfolio</h2>
+            <p style="color: #aaa; margin-bottom: 30px;" data-aos="fade-up" data-aos-delay="100">관리자 전용: 포트폴리오 자료를 업로드하는 공간입니다.</p>
+            <div class="upload-box" data-aos="fade-up">
+                <div class="input-group">
+                    <label>Category</label>
+                    <select id="upload-category">
+                        <option value="image">Image (Project)</option>
+                        <option value="video">Video (Showreel)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Title</label>
+                    <input type="text" placeholder="작품 제목을 입력하세요">
+                </div>
+                <div class="input-group">
+                    <label>File / Link</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="file-input" style="display: none;">
+                        <label for="file-input" class="file-btn">Choose File</label>
+                        <span style="color: #777; font-size: 0.9rem; margin-left: 10px;">or paste URL below</span>
+                    </div>
+                    <input type="text" placeholder="https://..." style="margin-top: 10px;">
+                </div>
+                <button type="button" class="btn-upload" onclick="alert('서버가 연결되지 않아 저장이 불가능합니다. (정적 페이지 데모)')">
+                    + Add to Portfolio
+                </button>
             </div>
-            <input type="text" placeholder="https://..." style="margin-top: 10px;">
-        </div>
+        </section>
 
-        <button type="button" class="btn-upload" onclick="alert('서버가 연결되지 않아 저장이 불가능합니다. (정적 페이지 데모)')">
-            + Add to Portfolio
-        </button>
-    </div>
-</section>
-
-    </div>
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    </div> <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
             offset: 150, duration: 800, easing: 'ease-out-cubic', once: true
         });
     </script>
-    <footer style="text-align: center; padding: 80px 0 40px; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; letter-spacing: 1px;">
-        <p style="margin-bottom: 8px;">DESIGNED & DEVELOPED BY HAN HYE RIN</p>
+
+    <footer style="
+        text-align: center; 
+        padding: 80px 20px 40px; 
+        color: rgba(255, 255, 255, 0.3); 
+        font-size: 0.75rem; 
+        letter-spacing: 1px;
+        max-width: 500px;  
+        margin: 0 auto;    
+        line-height: 1.8;
+    ">
+        <p style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px; display: inline-block;">
+            DESIGNED & DEVELOPED BY HAN HYE RIN
+        </p>
         <p>COPYRIGHT © 2025 MY PORTFOLIO. ALL RIGHTS RESERVED.</p>
     </footer>
 
