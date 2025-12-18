@@ -306,19 +306,15 @@
 
  <script>
         window.addEventListener('scroll', function() {
-            const scrolled = window.scrollY; 
-            const blob1 = document.querySelector('.blob-1');
-            const blob2 = document.querySelector('.blob-2');
-            const blob3 = document.querySelector('.blob-3');
+            const scrolled = window.pageYOffset;
+            const blobs = document.querySelectorAll('.blob');
             
-            // 요소가 있을 때만 작동
-            if(blob1 && blob2 && blob3) {
-                // transform을 건드리지 않고, top/bottom 위치만 수정
-                blob1.style.top = (-10 + scrolled * 0.05) + '%'; 
-                blob2.style.bottom = (-10 + scrolled * 0.1) + '%';
-                blob3.style.top = (30 + scrolled * 0.08) + '%';
+            // 스크롤할 때마다 각자 다른 속도로 위치를 옮김 (패럴랙스 효과)
+            if(blobs.length >= 3) {
+                blobs[0].style.top = (-50 + scrolled * 0.05) + '%';  // 보라색은 천천히 내려옴
+                blobs[1].style.bottom = (-50 + scrolled * -0.05) + '%'; // 핑크색은 반대로 움직임
+                blobs[2].style.top = (20 + scrolled * 0.02) + '%';   // 파란색은 아주 조금 움직임
             }
         });
     </script>
-</body>
-</html>
+</body> </html>
