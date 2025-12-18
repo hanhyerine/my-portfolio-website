@@ -9,52 +9,59 @@
     
     <style>
 /* =========================================
-           1. 배경 (수정: 덩어리X, 완전 퍼짐 + 스크롤 반응)
+/* =========================================
+           1. 배경 (수정: 핑크 축소 + 파랑/보라 확대 + 화사함 유지)
            ========================================= */
         .background-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 120vh; /* 스크롤 움직임 공간 확보 */
+            position: fixed; top: 0; left: 0; width: 100%; height: 120vh;
             overflow: hidden; z-index: -1;
             background: #0f0f11;
         }
 
         .blob {
             position: absolute;
-            border-radius: 50%; /* 모양은 원이지만 */
-            filter: blur(120px); /* 블러로 형체를 완전히 없앰 */
-            opacity: 0.5;
-            mix-blend-mode: screen;
-            will-change: transform, top; /* 부드러운 움직임 최적화 */
+            border-radius: 50%;
+            filter: blur(80px); /* 뭉게짐 효과 */
+            mix-blend-mode: screen; /* 색이 겹치면 더 밝아짐 (어두워짐 방지) */
+            will-change: transform, top, bottom, left, right;
             
-            /* 제자리에서 울렁거리는 애니메이션 */
-            animation: pulse-glow 10s infinite alternate ease-in-out;
+            /* 기본적으로 둥둥 떠다니는 애니메이션 */
+            animation: float-basic 10s infinite alternate ease-in-out;
         }
 
-        /* 1번 (보라) - 화면 전체를 덮는 거대한 안개 */
+        /* 1번 (보라) - 존재감 확대 */
         .blob-1 {
-            top: -50%; left: -50%; width: 200vw; height: 200vw;
-            background: radial-gradient(circle, rgba(138,43,226, 0.6) 0%, rgba(138,43,226, 0) 70%);
-            animation-duration: 15s;
+            top: -10%; left: -10%; 
+            width: 90vw; height: 90vw; /* 크기 키움 */
+            background: radial-gradient(circle, rgba(138,43,226, 0.8) 0%, rgba(138,43,226, 0) 70%);
+            opacity: 0.8; /* 진하게 */
+            animation-duration: 12s;
         }
 
-        /* 2번 (핑크) - 반대쪽에서 덮는 거대한 안개 */
+        /* 2번 (핑크) - 힘 빼기 (너무 튀지 않게) */
         .blob-2 {
-            bottom: -50%; right: -50%; width: 200vw; height: 200vw;
-            background: radial-gradient(circle, rgba(255,20,147, 0.5) 0%, rgba(255,20,147, 0) 70%);
-            animation-delay: -5s; animation-duration: 18s;
+            bottom: -20%; right: -20%; 
+            width: 80vw; height: 80vw; /* 보라보다 작게 */
+            background: radial-gradient(circle, rgba(255,20,147, 0.6) 0%, rgba(255,20,147, 0) 70%);
+            opacity: 0.5; /* 연하게 (핑크색 지배 방지) */
+            animation-delay: -5s; animation-duration: 15s;
         }
 
-        /* 3번 (파랑) - 중앙에서 은은하게 */
+        /* 3번 (파랑) - 중앙에서 중심 잡기 */
         .blob-3 {
-            top: 20%; left: 10%; width: 180vw; height: 180vw;
-            background: radial-gradient(circle, rgba(0,191,255, 0.5) 0%, rgba(0,191,255, 0) 70%);
-            animation-delay: -8s; animation-duration: 20s;
+            top: 40%; right: 30%; /* 위치를 좀 더 중앙으로 */
+            width: 90vw; height: 90vw; 
+            background: radial-gradient(circle, rgba(0,191,255, 0.8) 0%, rgba(0,191,255, 0) 70%);
+            opacity: 0.8; /* 진하게 */
+            animation-delay: -8s; animation-duration: 18s;
         }
 
-        /* [애니메이션: 살짝씩 커졌다 작아지며 울렁거림] */
-        @keyframes pulse-glow {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.1); opacity: 0.7; }
+        /* 둥둥 떠다니는 효과 */
+        @keyframes float-basic {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.1) translate(20px, 20px); }
         }
+
         /* 2. 기본 세팅 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #0f0f11; color: white; overflow-x: hidden; }
@@ -291,15 +298,22 @@
 
  <script>
         window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
+            const scrolled = window.scrollY; // 현재 스크롤 위치
             const blobs = document.querySelectorAll('.blob');
             
-            // 스크롤할 때마다 각자 다른 속도로 위치를 옮김 (패럴랙스 효과)
             if(blobs.length >= 3) {
-                blobs[0].style.top = (-50 + scrolled * 0.05) + '%';  // 보라색은 천천히 내려옴
-                blobs[1].style.bottom = (-50 + scrolled * -0.05) + '%'; // 핑크색은 반대로 움직임
-                blobs[2].style.top = (20 + scrolled * 0.02) + '%';   // 파란색은 아주 조금 움직임
+                // 1. 보라색: 스크롤 내리면 -> 아래로 빠르게 내려옴 (0.2배속)
+                blobs[0].style.top = (-10 + scrolled * 0.1) + '%'; 
+                blobs[0].style.left = (-10 + scrolled * 0.05) + '%'; // 오른쪽으로도 살짝 이동
+
+                // 2. 핑크색: 스크롤 내리면 -> 위로 솟구침 (역동적!)
+                blobs[1].style.bottom = (-20 + scrolled * 0.15) + '%';
+                
+                // 3. 파란색: 스크롤 내리면 -> 왼쪽으로 가로지름
+                blobs[2].style.right = (30 + scrolled * 0.1) + '%';
+                blobs[2].style.top = (40 + scrolled * 0.05) + '%';
             }
         });
     </script>
-</body> </html>
+</body>
+</html>
