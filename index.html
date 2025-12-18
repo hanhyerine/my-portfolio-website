@@ -12,57 +12,63 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #0f0f11; color: white; overflow-x: hidden; }
 
-        /* 2. 움직이는 오로라 배경 (업그레이드 버전!) */
+        * 2. 움직이는 오로라 배경 (살아있는 느낌) */
         .background-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             overflow: hidden; z-index: -1;
-            background: #0f0f11; /* 기본 배경색 */
+            background: #0f0f11; /* 깊은 밤하늘 색 */
         }
 
         .blob {
-            position: absolute; border-radius: 50%;
-            filter: blur(80px); /* 뭉개지는 효과 */
-            opacity: 0.7;
-            /* ★핵심: 색깔끼리 겹칠 때 빛나는 효과 */
-            mix-blend-mode: screen; 
-            animation: float 10s infinite ease-in-out alternate;
+            position: absolute;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; /* 처음부터 찌그러진 원 */
+            filter: blur(60px); /* 몽환적인 블러 처리 */
+            opacity: 0.6;
+            mix-blend-mode: screen; /* 색이 겹칠 때 빛나는 효과 */
+            /* infinite alternate: 갔다가 돌아오기를 무한 반복 (끊김 없음) */
+            animation: aurora-move 20s infinite alternate ease-in-out;
         }
 
-        /* 덩어리 1 (보라) - 더 크게 움직임 */
+        /* 1번: 보라색 (왼쪽 위에서 퍼짐) */
         .blob-1 { 
-            top: -10%; left: -10%; width: 70vw; height: 70vw; 
-            background: #8A2BE2; 
-            animation-duration: 20s; /* 속도 다르게 */
+            top: -10%; left: -10%; width: 60vw; height: 60vw; 
+            background: #7B2FBE; 
+            animation-duration: 25s; /* 천천히 */
         }
         
-        /* 덩어리 2 (핑크) - 반대쪽에서 옴 */
+        /* 2번: 핑크색 (오른쪽 아래에서 퍼짐) */
         .blob-2 { 
-            top: 20%; right: -20%; width: 60vw; height: 60vw; 
+            bottom: -10%; right: -10%; width: 60vw; height: 60vw; 
             background: #FF1493; 
-            animation-duration: 25s; 
             animation-delay: -5s;
+            animation-duration: 28s; /* 더 천천히 */
         }
         
-        /* 덩어리 3 (파랑) - 아래에서 섞임 */
+        /* 3번: 파란색 (중앙 아래에서 퍼짐) */
         .blob-3 { 
-            bottom: -20%; left: 20%; width: 60vw; height: 60vw; 
+            bottom: -20%; left: 20%; width: 50vw; height: 50vw; 
             background: #00BFFF; 
-            animation-duration: 18s; 
             animation-delay: -10s;
+            animation-duration: 32s; /* 가장 천천히 */
         }
 
-        /* ★핵심: 빙글빙글 돌면서 위치도 크게 바뀜 */
-        @keyframes float {
-            0% { 
-                transform: translate(0, 0) rotate(0deg) scale(1); 
+        /* ★핵심: 모양이 일렁거리고 커졌다 작아지는 애니메이션 ★ */
+        @keyframes aurora-move {
+            0% {
+                transform: translate(0, 0) scale(1);
+                border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
             }
-            50% { 
-                /* 중간쯤 왔을 때 살짝 커짐 */
-                transform: translate(50px, 50px) rotate(180deg) scale(1.1); 
+            33% {
+                transform: translate(30px, -50px) scale(1.1); /* 위치 이동 + 살짝 커짐 */
+                border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; /* 모양 변형 */
             }
-            100% { 
-                /* 끝까지 갔을 때 위치를 확 바꿈 */
-                transform: translate(-50px, 100px) rotate(360deg) scale(0.9); 
+            66% {
+                transform: translate(-20px, 20px) scale(0.9); /* 다른 위치 + 살짝 작아짐 */
+                border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; /* 모양 변형 */
+            }
+            100% {
+                transform: translate(0, 0) scale(1);
+                border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
             }
         }
         /* 3. 레이아웃 */
@@ -224,12 +230,12 @@ select {
         Hi, this is my portfolio
     </h1>
     
-    <p data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
+    <p data-aos="fade-in" data-aos-delay="400" data-aos-duration="1500">
         꿈을 향해 나아가는 소중한 순간들<br>
         어제보다 더 나은 나의 여정
     </p>
     
-    <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.5;" data-aos="fade-in" data-aos-delay="1300">
+    <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.5;" data-aos="fade-in" data-aos-delay="1200" data-aos-duration="1000">
         ↓ View My Work
     </p>
 </section>
