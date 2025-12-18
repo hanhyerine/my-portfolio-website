@@ -111,11 +111,53 @@
             box-shadow: 0 0 30px rgba(255, 20, 147, 0.5), inset 0 0 20px rgba(255, 20, 147, 0.2);
         }
 
+        /* [관리자 업로드 섹션 스타일] */
+.upload-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed rgba(255, 255, 255, 0.2); /* 점선 테두리 */
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.input-group { margin-bottom: 25px; text-align: left; }
+.input-group label { display: block; margin-bottom: 10px; color: #FF1493; font-weight: bold; }
+
+/* 선택 상자 (Select) 디자인 */
+select {
+    width: 100%; padding: 15px;
+    background: #0f0f11; color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px; outline: none;
+}
+
+/* 파일 업로드 버튼 꾸미기 */
+.file-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #333; color: white;
+    border-radius: 5px; cursor: pointer;
+    border: 1px solid #555;
+}
+.file-btn:hover { background: #444; }
+
+/* 업로드 버튼 (Add) */
+.btn-upload {
+    width: 100%; padding: 20px;
+    background: linear-gradient(to right, #00BFFF, #8A2BE2); /* 파랑-보라 그라데이션 */
+    color: white; border: none; border-radius: 8px;
+    font-size: 1.2rem; font-weight: 800;
+    cursor: pointer; margin-top: 10px;
+    transition: transform 0.2s;
+}
+.btn-upload:hover { transform: scale(1.02); }
+
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
         /* 7. 컨택 폼 (변경 없음) */
         .contact-form {
-            max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;
+            max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;
             background: rgba(255,255,255,0.03); padding: 40px; border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);
         }
@@ -145,7 +187,7 @@
     <div class="container">
         <section id="hero" data-aos="fade-up" data-aos-duration="1000">
             <h1>Hi, this is my <br>portfolio</h1>
-            <p>꿈을 향해 나아가는 소중한 순간들.<br>어제보다 더 나은 나의 여정</p>
+            <p>꿈을 향해 나아가는 소중한 순간들.<br>어제보다 더 나은 나의 여정 </p>
             <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.5;">↓ View My Work</p>
         </section>
 
@@ -201,6 +243,41 @@
                  <button type="submit" class="btn-submit">Send Message</button>
              </form>
         </section>
+
+        <section id="upload">
+    <h2 class="section-title" data-aos="fade-right">Upload Portfolio</h2>
+    <p style="color: #aaa; margin-bottom: 30px;">관리자 전용: 포트폴리오 자료를 업로드하는 공간입니다.</p>
+
+    <div class="upload-box" data-aos="fade-up">
+        <div class="input-group">
+            <label>Category</label>
+            <select id="upload-category">
+                <option value="image">Image (Project)</option>
+                <option value="video">Video (Showreel)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Title</label>
+            <input type="text" placeholder="작품 제목을 입력하세요">
+        </div>
+
+        <div class="input-group">
+            <label>File / Link</label>
+            <div class="file-upload-wrapper">
+                <input type="file" id="file-input" style="display: none;">
+                <label for="file-input" class="file-btn">Choose File</label>
+                <span style="color: #777; font-size: 0.9rem; margin-left: 10px;">or paste URL below</span>
+            </div>
+            <input type="text" placeholder="https://..." style="margin-top: 10px;">
+        </div>
+
+        <button type="button" class="btn-upload" onclick="alert('서버가 연결되지 않아 저장이 불가능합니다. (정적 페이지 데모)')">
+            + Add to Portfolio
+        </button>
+    </div>
+</section>
+
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
