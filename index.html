@@ -12,7 +12,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #0f0f11; color: white; overflow-x: hidden; }
 
-        * 2. 움직이는 오로라 배경 (살아있는 느낌) */
+        /* 2. 움직이는 오로라 배경 (살아있는 느낌) */
         .background-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             overflow: hidden; z-index: -1;
@@ -71,6 +71,15 @@
                 border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
             }
         }
+        /* [비디오 섹션 전용 확장 코드] */
+    /* PC 화면에서만 비디오 박스를 강제로 넓힙니다 */
+    @media (min-width: 1024px) {
+        #video .grid {
+            width: 130% !important;       /* 전체 폭보다 30% 더 넓게! */
+            margin-left: -15% !important; /* 왼쪽으로 당겨서 중앙 맞추기 */
+            gap: 40px;                    /* 영상 사이 간격도 시원하게 */
+        }
+    }
         /* 3. 레이아웃 */
         .container { max-width:700px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
         section { padding: 120px 0; }
@@ -235,9 +244,9 @@ select {
         어제보다 더 나은 나의 여정
     </p>
     
-    <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.5;" data-aos="fade-in" data-aos-delay="1200" data-aos-duration="1000">
-        ↓ View My Work
-    </p>
+    <p style="margin-top: 30px; font-size: 0.9rem;" data-aos="fade-in" data-aos-delay="1200" data-aos-duration="1000">
+    ↓ View My Work
+</p>
 </section>
 
         <section id="projects">
