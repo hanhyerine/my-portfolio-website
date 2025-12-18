@@ -48,81 +48,7 @@
             50% { transform: translate(55%, 35%) scale(0.9); }
             100% { transform: translate(25%, -5%) scale(1.1); }
         }
-/* 캐릭터 카드 내 말풍선 버튼 배치를 위한 설정 */
-.card-img-wrapper {
-    position: relative; /* 버튼 배치의 기준점 */
-}
 
-.chat-trigger {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 45px;
-    height: 45px;
-    background: rgba(255, 20, 147, 0.9); /* 핑크색 포인트 */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    font-size: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
-    border: none;
-}
-.chat-trigger:hover {
-    transform: scale(1.1);
-    background: #8A2BE2; /* 호버 시 보라색으로 변경 */
-}
-
-/* 중앙 대화창 모달 스타일 */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    display: none; /* 기본은 숨김 */
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    width: 90%;
-    max-width: 500px;
-    height: 70vh;
-    background: #1a1a1a;
-    border-radius: 20px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.modal-header {
-    padding: 15px 20px;
-    background: #222;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #333;
-}
-
-.close-modal {
-    cursor: pointer;
-    font-size: 24px;
-    color: #999;
-}
-.close-modal:hover { color: white; }
-
-#chat-frame {
-    flex: 1;
-    width: 100%;
-    border: none;
-}
         /* 속도: 6s~8s대로 설정 (약 3배 빠름) */
         .blob-1 {
             top: 0; left: 0;
@@ -216,31 +142,27 @@
         </section>
 
         <section id="projects">
-    <h2 class="section-title" data-aos="fade-right">AI Images</h2>
-    <div class="grid">
-        <div class="card" data-aos="fade-up" data-aos-delay="100">
-            <div class="card-img-wrapper">
-                <button class="chat-trigger" onclick="openChat()">💬</button>
-                <img src="project2.png.png" class="card-img" alt="Project 1">
+            <h2 class="section-title" data-aos="fade-right">AI Images</h2>
+            <div class="grid">
+                <div class="card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-img-wrapper">
+                        <img src="project1.png.png" class="card-img" alt="Project 1">
+                    </div>
+                    <div class="card-content">
+                        <h3>루엔</h3>
+                        <p>Cling AI로 제작한 판타지 캐릭터입니다.</p>
+                    </div>
+                </div>
+                <div class="card" data-aos="fade-up" data-aos-delay="200">
+                     <div class="card-img-wrapper">
+                        <img src="project2.png.png" class="card-img" alt="Project 2">
+                    </div>
+                    <div class="card-content">
+                        <h3>엘리시아 루벨린</h3>
+                        <p>Cling AI로 제작한 판타지 캐릭터입니다.</p>
+                    </div>
+                </div>
             </div>
-            <div class="card-content">
-                <h3>루엔</h3>
-                <p>Cling AI로 제작한 판타지 캐릭터입니다.</p>
-            </div>
-        </div>
-        
-        </div>
-</section>
-
-<div class="modal-overlay" id="chatModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span>AI 캐릭터와 대화하기</span>
-            <span class="close-modal" onclick="closeChat()">✕</span>
-        </div>
-        <iframe id="chat-frame" src=""></iframe>
-    </div>
-</div>
         </section>
 
         <section id="video">
@@ -307,127 +229,6 @@
                 ticking = true;
             }
         });
-    </script>
-    <style>
-        /* 채팅 버튼 스타일 */
-        #chat-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 65px;
-            height: 65px;
-            background: linear-gradient(135deg, #8A2BE2, #FF1493);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            font-size: 24px;
-            border: none;
-        }
-        #chat-button:hover { transform: scale(1.1) rotate(5deg); }
-
-        /* 채팅 창 컨테이너 (처음엔 숨김 처리) */
-        #chat-window {
-            position: fixed;
-            bottom: 110px;
-            right: 30px;
-            width: 380px;
-            height: 600px;
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            z-index: 999;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
-            display: none; /* 클릭 전까지 숨김 */
-            flex-direction: column;
-            animation: slideUp 0.4s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* 채팅창 상단 바 */
-        .chat-header {
-            background: #1a1a1a;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: bold;
-        }
-        .close-chat { cursor: pointer; font-size: 20px; opacity: 0.7; }
-        .close-chat:hover { opacity: 1; }
-
-        /* 채팅창 내부 iframe (내 캐릭터 링크) */
-        #chat-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* 모바일 대응 */
-        @media (max-width: 480px) {
-            #chat-window {
-                width: calc(100% - 40px);
-                height: 70vh;
-                right: 20px;
-            }
-        }
-    </style>
-
-    <button id="chat-button" onclick="toggleChat()">💬</button>
-
-    <div id="chat-window">
-        <div class="chat-header">
-            <span>Character AI Chat</span>
-            <span class="close-chat" onclick="toggleChat()">✕</span>
-        </div>
-        <iframe id="chat-frame" src="https://ai.eo25.kr/chat?characterId=1762359389202-p3qfuwoz3"></iframe>
-    </div>
-
-    <script>
-        function toggleChat() {
-            const chatWindow = document.getElementById('chat-window');
-            const chatButton = document.getElementById('chat-button');
-            
-            if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
-                chatWindow.style.display = 'flex';
-                chatButton.innerHTML = '✕'; // 버튼 모양 변경
-            } else {
-                chatWindow.style.display = 'none';
-                chatButton.innerHTML = '💬';
-            }
-            const chatModal = document.getElementById('chatModal');
-const chatFrame = document.getElementById('chat-frame');
-const chatUrl = "https://ai.eo25.kr/chat?characterId=1762359389202-p3qfuwoz3";
-
-function openChat() {
-    // 모달을 열 때 iframe 주소를 설정 (열 때만 로딩되도록)
-    chatFrame.src = chatUrl;
-    chatModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
-}
-
-function closeChat() {
-    chatModal.style.display = 'none';
-    chatFrame.src = ""; // 닫을 때 주소를 지워 대화 초기화 및 성능 최적화
-    document.body.style.overflow = 'auto'; // 배경 스크롤 다시 허용
-}
-
-// 모달 바깥쪽 클릭 시 닫기 기능
-window.onclick = function(event) {
-    if (event.target == chatModal) {
-        closeChat();
-    }
-}
-        }
     </script>
 </body>
 </html>
